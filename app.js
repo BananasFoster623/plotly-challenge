@@ -4,6 +4,12 @@
 //     console.log(data)
 // })
 
+function optionChanged(value){
+    makeBar(value);
+    makeBubble(value);
+    displayMetadata(value);
+};
+
 // This function gets called by init() and makes the bar chart
 function makeBar(value) {
     // console.log(value); // Checking to see that the function is passing the dropdown value
@@ -65,6 +71,20 @@ function makeBubble(value) {
     })
 };
 
+function displayMetadata(value) {
+    d3.json("samples.json").then((data) => {
+        var metadataArray = data.metadata.filter(selected => selected.id == value);
+        var metadata = metadataArray[0];
+        console.log(metadata)
+        let wordbox = d3.select("#sample-metadata");
+        wordbox.html("") // resets html to be blank
+        // this should work just like on the ufo assignment....
+        Object.entries(metadata).forEach(([key,value]) => {
+            wordbox.append("h6").text(`${key} : ${value}`)
+        })
+    })
+}
+
 function init () {
     var valueSelected = d3.select("#selDataset"); // Here we are selecting the dropdown button
     d3.json("samples.json").then((data) => { //use an arrow function with the then to make sure samples.json loads first
@@ -82,10 +102,6 @@ function init () {
     })
 };
 
-function optionChanged(value){
-    makeBar(value);
-    makeBubble(value);
-    displayMetadata(value);
-};
+
 
 init();
