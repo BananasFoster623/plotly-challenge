@@ -8,5 +8,6 @@ This homework builds an interactive dashboard to explore the Belly Button Biodiv
   - Standard index.html file
 - app.js
   - Contains the following functions:
+    - Hello
 
 The project is deployed to github pages. Both links were submitted with the assignment. 
