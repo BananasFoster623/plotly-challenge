@@ -1,9 +1,4 @@
-// // Just checking out the data; delete once finished
-// d3.json("samples.json").then((data) => {
-//     console.log("Hello World")
-//     console.log(data)
-// })
-
+// This is the event handler to take update everything when the user selects a new value
 function optionChanged(value){
     makeBar(value);
     makeBubble(value);
