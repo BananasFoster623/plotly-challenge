@@ -10,14 +10,14 @@ function makeBar(value) {
     // console.log(value); // Checking to see that the function is passing the dropdown value
     d3.json("samples.json").then((data) => {
         // Need to grab the associated data with our user selected name
-        var ourNameArray = data.samples.filter(selected => selected.id == value);
-        var ourName = ourNameArray[0]; // initially gives array with dictionary, so we need to select the first one
+        let ourNameArray = data.samples.filter(selected => selected.id == value);
+        let ourName = ourNameArray[0]; // initially gives array with dictionary, so we need to select the first one
 
         // this is going to be hard...we need to get the values and their corresponding names?
-        var yvals = ourName.otu_ids.slice(0,10).map(mapped => `OTU ${mapped}`) // need to use a map to associate the ID with the result
-        var xvals = ourName.sample_values.slice(0,10)
+        let yvals = ourName.otu_ids.slice(0,10).map(mapped => `OTU ${mapped}`) // need to use a map to associate the ID with the result
+        let xvals = ourName.sample_values.slice(0,10)
 
-        var barData = [
+        let barData = [
             {
                 x: xvals.reverse(),
                 y: yvals.reverse(),
@@ -25,8 +25,7 @@ function makeBar(value) {
                 orientation: 'h'
             }
         ];
-
-        var barLayout = {
+        let barLayout = {
             title: "Top 10 OTUs",
             margin: { t: 70, l: 75 }
           };
@@ -38,13 +37,13 @@ function makeBar(value) {
 function makeBubble(value) {
     d3.json("samples.json").then((data) => {
         // Need to grab the associated data with our user selected name
-        var ourNameArray = data.samples.filter(selected => selected.id == value);
-        var ourName = ourNameArray[0]; // initially gives array with dictionary, so we need to select the first one
+        let ourNameArray = data.samples.filter(selected => selected.id == value);
+        let ourName = ourNameArray[0]; // initially gives array with dictionary, so we need to select the first one
 
         // Same as for bar, but without the slicing or mapping
-        var yvals = ourName.otu_ids
-        var xvals = ourName.sample_values
-        var bubbleData = [
+        let yvals = ourName.otu_ids
+        let xvals = ourName.sample_values
+        let bubbleData = [
             {
                 x: yvals,
                 y: xvals,
@@ -56,20 +55,19 @@ function makeBubble(value) {
                 text: ourName.otu_labels
             }
         ]
-
-        var bubbleLayout = {
+        let bubbleLayout = {
             title: "OTUs by Sample Value",
             margin: {t: 70, l: 75}
         }
-
         Plotly.newPlot("bubble", bubbleData, bubbleLayout)
     })
 };
 
+// This function gets called by init() and sets the Demographic Info box
 function displayMetadata(value) {
     d3.json("samples.json").then((data) => {
-        var metadataArray = data.metadata.filter(selected => selected.id == value);
-        var metadata = metadataArray[0];
+        let metadataArray = data.metadata.filter(selected => selected.id == value);
+        let metadata = metadataArray[0];
         console.log(metadata)
         let wordbox = d3.select("#sample-metadata");
         wordbox.html("") // resets html to be blank
@@ -81,9 +79,9 @@ function displayMetadata(value) {
 }
 
 function init () {
-    var valueSelected = d3.select("#selDataset"); // Here we are selecting the dropdown button
+    let valueSelected = d3.select("#selDataset"); // Here we are selecting the dropdown button
     d3.json("samples.json").then((data) => { //use an arrow function with the then to make sure samples.json loads first
-        var sampleNames = data.names; // The json file has the sample IDs called 'names' so we are grabbing them all here to display
+        let sampleNames = data.names; // The json file has the sample IDs called 'names' so we are grabbing them all here to display
 
         sampleNames.forEach((sample) => { // Using forEach to run through each of the samples and throwing the name into the dropdown menu
             valueSelected
@@ -96,7 +94,5 @@ function init () {
         displayMetadata(data.names[0]);
     })
 };
-
-
 
 init();
