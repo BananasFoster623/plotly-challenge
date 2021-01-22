@@ -7,7 +7,11 @@ This homework builds an interactive dashboard to explore the Belly Button Biodiv
 - Index.html
   - Standard index.html file
 - app.js
-  - Contains the following functions:
-    - Hello
+  - Contains the following functions (in order):
+    - optionChanged() : This function is the event handler that updates the charts with the user-selected value
+    - makeBar() : This is the bar chart
+    - makeBubble() : This is the bubble chart
+    - displayMetadata() : This fills the Demographic Info text box
+    - init() : This initializes the page with the standard value
 
 The project is deployed to github pages. Both links were submitted with the assignment. 
