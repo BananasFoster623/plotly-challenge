@@ -68,7 +68,7 @@ function displayMetadata(value) {
     d3.json("samples.json").then((data) => {
         let metadataArray = data.metadata.filter(selected => selected.id == value);
         let metadata = metadataArray[0];
-        console.log(metadata)
+
         let wordbox = d3.select("#sample-metadata");
         wordbox.html("") // resets html to be blank
         // this should work just like on the ufo assignment....
