@@ -4,20 +4,6 @@
 //     console.log(data)
 // })
 
-function displayMetadata(value) {
-    d3.json("samples.json").then((data) => {
-        var metadataArray = data.metadata.filter(selected => selected.id == value);
-        var metadata = metadataArray[0];
-        console.log(metadata)
-        let wordbox = d3.select("#sample-metadata");
-        wordbox.html("") // resets html to be blank
-        // this should work just like on the ufo assignment....
-        Object.entries(metadata).forEach(([key,value]) => {
-            wordbox.append("h6").text(`${key} : ${value}`)
-        })
-    })
-}
-
 // This function gets called by init() and makes the bar chart
 function makeBar(value) {
     // console.log(value); // Checking to see that the function is passing the dropdown value
@@ -54,24 +40,25 @@ function makeBubble(value) {
         var ourNameArray = data.samples.filter(selected => selected.id == value);
         var ourName = ourNameArray[0]; // initially gives array with dictionary, so we need to select the first one
 
-        // this is going to be hard...we need to get the values and their corresponding names?
+        // Same as for bar, but without the slicing or mapping
         var yvals = ourName.otu_ids
         var xvals = ourName.sample_values
         var bubbleData = [
             {
-                x: xvals,
-                y: yvals,
+                x: yvals,
+                y: xvals,
                 mode: "markers",
                 marker: {
-                    size: 12,
-                    opacity: 0.5
-                }
+                    size: ourName.sample_values,
+                    color: ourName.otu_ids
+                },
+                text: ourName.otu_labels
             }
         ]
 
         var bubbleLayout = {
-            title: "Top 10 OTUs",
-            margin: {t: 30, l: 150}
+            title: "OTUs by Sample Value",
+            margin: {t: 70, l: 75}
         }
 
         Plotly.newPlot("bubble", bubbleData, bubbleLayout)
@@ -89,10 +76,10 @@ function init () {
                 .text(sample)
                 .attr("something",sample);
         });
+        makeBar(data.names[0]);
+        makeBubble(data.names[0]);
+        displayMetadata(data.names[0]);
     })
-    makeBar(940);
-    makeBubble(940);
-    displayMetadata(940);
 };
 
 function optionChanged(value){
